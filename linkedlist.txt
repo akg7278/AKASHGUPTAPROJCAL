@@ -1,0 +1,92 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+	int info;
+	struct node *ptr;
+};
+struct node *createlist(struct node *head);
+void display(struct node *head);
+struct node *addatbeg(struct node *head,int data); 
+struct node *addatend(struct node *head,int data);
+int main()
+{
+	struct node *head=NULL;
+    int choice,data;
+	while(1)
+	{	
+	printf("\nCHOICES=\n1.Create List.\n2.Display.\n3.Add at the beggining.\n4.add at the end");
+	scanf("%d",&choice);
+	switch(choice)
+	{
+		case 1:head=createlist(head);
+		     break;
+	    case 2:display(head);
+	          break;
+	    case 3:printf("\nEnter the element to be inserted:");  //add ist element to the list
+	           scanf("%d",&data);
+	           head=addatbeg(head,data);
+	           break;
+	    case 4:printf("\nEnter the element to be inserted:");
+	           scanf("%d",&data);
+	           head=addatend(head,data);
+	           
+	             
+	}
+	}
+}
+struct node *createlist(struct node *head)
+{
+	int i,n,data;
+	printf("\n Enter the number of node in the list:");
+	scanf("%d",&n);
+	head=NULL;
+	if(n==0)
+	return head;
+	printf("\nEnter the element you want to insert:");
+	scanf("%d",&data);
+	head=addatbeg(head,data);
+	for(i=2;i<=n;i++)
+	{
+		printf("\n Enter the elemet you want to insert:");
+		scanf("%d",&data);
+		head=addatend(head,data);
+	}
+	return head;
+}
+struct node *addatbeg(struct node *head,int data)
+{
+	struct node *temp;
+	temp=(struct node*)malloc(sizeof(struct node));
+	temp->info=data;
+	temp->ptr=head;
+	head=temp;
+	return head;
+}
+struct node *addatend(struct node *head,int data)
+{
+	struct node *temp;
+	struct node *p; 
+	temp=(struct node*)malloc(sizeof(struct node));
+	temp->info=data;
+	p=head;
+	while(p!=NULL)
+	   p=p->ptr;
+	p->ptr=temp;
+	temp->ptr=NULL; 
+	return head;           //since it is last node
+}
+void display(struct node *head)
+{
+	struct node *p;
+	if(head==NULL)
+	printf("\n LIst is empty");
+	p=head;
+	printf("\n");
+	while(p!=NULL)
+	{
+		printf("%d->",p->info);
+		p=p->ptr;
+        	
+	}
+}
